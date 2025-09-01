@@ -1,0 +1,62 @@
+  
+  {% extends 'base.html' %}
+  {% block title %}HOME{% endblock title %}
+  {% block body %}
+        
+    <div class="container my-4">
+        <h2>Add Your Todo</h2>
+        <form action="/" method="POST">
+  <div class="mb-3">
+    <label for="title" class="form-label">Todo Title</label>
+    <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp">
+  </div>
+  <div class="mb-3">
+    <label for="desc" class="form-label">Description</label>
+    <input type="text" class="form-control" name="desc" id="desc">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+    </div>
+
+<div class="container my-4">
+    <h2>Your Todo List</h2>
+    {% if allTodo|length == 0 %}
+        <div class="alert alert-warning" role="alert">
+            <strong>No Todo Found!</strong> Add new tasks.
+        </div>
+    {% else %}
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todo in allTodo %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ todo.title }}</td>
+                <td>{{ todo.desc }}</td>
+                <td>{{ todo.date_created.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>
+                    <a href="/update/{{ todo.Sno }}" class="btn btn-outline-dark btn-sm mx-1">Update</a>
+                    <a href="/delete/{{ todo.Sno }}" class="btn btn-outline-dark btn-sm mx-1">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  {% endblock body %}
